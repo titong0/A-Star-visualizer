@@ -1,14 +1,16 @@
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
-
 canvas.height = innerHeight > innerWidth ? innerWidth - 50 : innerHeight - 50;
 canvas.width = canvas.height;
 
-const rows = 30;
-const columns = rows;
-const grid = new Array(rows);
-const cellWidth = canvas.height / rows;
+const gridSize = document.getElementById("gridSize");
+const iterationDelay = document.getElementById("iterationDelay");
+
+let rows = gridSize.value;
+let columns = rows;
+let grid = new Array(rows);
+let cellWidth = canvas.height / rows;
 
 const createGrid = () => {
   // create all columns
@@ -32,9 +34,8 @@ const createGrid = () => {
 createGrid();
 
 let start = grid[random(rows)][random(columns)];
-let end = grid[random(rows)][random(columns)];
-
 start.blocked = false;
+let end = grid[random(rows)][random(columns)];
 end.blocked = false;
 
 let path = [start];
@@ -73,6 +74,7 @@ function iteration() {
       winner = i;
     }
   }
+
   const current = openSet[winner];
   showPath(current);
   if (current === end) {
@@ -104,12 +106,13 @@ function iteration() {
 }
 
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+let interrumpt;
 
-async function solve(ms = 50) {
+async function solve() {
   let solvedYet = iteration();
-  while (!solvedYet) {
+  while (!solvedYet && !interrumpt) {
     solvedYet = iteration();
-    await timer(ms);
+    await timer(iterationDelay.value);
   }
 }
 
@@ -167,6 +170,29 @@ function Cell(x, y, blocked) {
       this.neighbors.push(grid[this.y][this.x + 1]);
     }
   };
+}
+
+async function newGrid() {
+  interrumpt = true;
+  await timer(iterationDelay.value);
+  interrumpt = false;
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  columns = gridSize.value;
+  rows = columns;
+  grid = new Array(rows);
+  cellWidth = canvas.height / rows;
+
+  createGrid();
+  start = grid[random(rows)][random(columns)];
+  start.blocked = false;
+  end = grid[random(rows)][random(columns)];
+  end.blocked = false;
+
+  path = [start];
+  openSet = [start];
+  closedSet = [];
+
+  colorStuff();
 }
 
 colorStuff();
