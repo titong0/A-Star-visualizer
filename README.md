@@ -1,6 +1,7 @@
 # A-Star-visualizer
-visualize the A* pathfinding algorithm. [tutorial](https://www.youtube.com/watch?v=aKYlikFAV4k&ab) from [The coding train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw) on yt
+Visualize the A* pathfinding algorithm, I added some controls to make it easier to understand
 
-## Okay but isn't it literally the same code you can find in the tutorial, with the only difference that this looks ugly?
-
-yeah..... anyway enjoy I guess
+### Useful links
+* [The coding train](https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw)
+* [Tutorial in which this project is inspired](https://www.youtube.com/watch?v=aKYlikFAV4k&ab)
+* [A* Wikipedia page](https://en.wikipedia.org/wiki/A*_search_algorithm)
